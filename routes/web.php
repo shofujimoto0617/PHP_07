@@ -17,3 +17,7 @@ Route::get('/about', function () {
 });
 
 Route::get('/contactsd-asdf-asdfasd', [ContactController::class, 'index'])->name('ariyan');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
