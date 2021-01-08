@@ -14,6 +14,6 @@ Route::get('/home', function () {
 
 Route::get('/about', function () {
     return view('about');
-})->middleware('check');
+});
 
-Route::get('/contact', [ContactController::class, 'index']);
+Route::get('/contactsd-asdf-asdfasd', [ContactController::class, 'index'])->name('ariyan');
