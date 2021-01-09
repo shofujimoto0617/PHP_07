@@ -14,8 +14,14 @@ class CategoryController extends Controller
     //* Category AllCat(index)
     public function AllCat(){
 
+        //* DBからuserの値を直接取得(投稿順) ↓↓
+        $categories = DB::table('categories')
+                ->join('users','categories.user_id','users.id')
+                ->select('categories.*','users.name')
+                ->latest()->paginate(5);
+
         //* Modelから値取得(投稿順) ↓↓
-        $categories = Category::latest()->paginate(5);
+        // $categories = Category::latest()->paginate(5);
 
         //* DBから値取得(投稿順) ↓↓
         // $categories = DB::table('categories')->latest->paginate(5);
