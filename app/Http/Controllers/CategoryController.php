@@ -69,16 +69,30 @@ class CategoryController extends Controller
 
 
     public function Edit($id){
-        $categories = Category::find($id);
+        //* Modelから値取得 ↓↓
+        // $categories = Category::find($id);
+
+        //* DBから値取得 ↓↓
+        $categories = DB::table('categories')->where('id',$id)->first();
+
         return view('admin.category.edit',compact('categories'));
 
     }
 
     public function Update(Request $request ,$id){
-        $update = Category::find($id)->update([
-            'category_name' => $request->category_name,
-            'user_id' => Auth::user()->id
-        ]);
+
+        //* ModelからUpdate ↓↓
+        // $update = Category::find($id)->update([
+        //     'category_name' => $request->category_name,
+        //     'user_id' => Auth::user()->id
+        // ]);
+
+        //* DBへ直接Update ↓↓
+        $data = array();
+        $data['category_name'] = $request->category_name;
+        $data['user_id'] = Auth::user()->id;
+        DB::table('categories')->where('id',$id)->update($data);
+
         return Redirect()->route('all.category')->with('success','Category Updated Successfull');
     }
 }
