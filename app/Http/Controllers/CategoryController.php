@@ -13,7 +13,13 @@ class CategoryController extends Controller
 {
     //* Category AllCat(index)
     public function AllCat(){
-        $categories = Category::latest()->get();
+
+        //* Modelから値取得 ↓↓
+        // $categories = Category::latest()->get();
+
+        //* DBから値取得 ↓↓
+        $categories = DB::table('categories')->latest()->get();
+
         return view('admin.category.index', compact('categories'));
     }
 
