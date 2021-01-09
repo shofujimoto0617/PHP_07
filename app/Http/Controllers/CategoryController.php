@@ -100,8 +100,22 @@ class CategoryController extends Controller
         return Redirect()->route('all.category')->with('success','Category Updated Successfull');
     }
 
+    /* 復元可能　削除 */
     public function SoftDelete($id){
         $delete = Category::find($id)->delete();
         return Redirect()->back()->with('success','Category Soft Delete Successfully');
+    }
+
+    /* 削除データを復元 */
+    public function Restore($id){
+        $delete = Category::withTrashed()->find($id)->restore();
+        return Redirect()->back()->with('success','Category Restore Successfully');
+    }
+
+    /* 復元不可　削除 */
+    public function Pdelete($id){
+        $delete = Category::onlyTrashed()->find($id)->forceDelete();
+        return Redirect()->back()->with('success','Category Permanently Deleted');
+
     }
 }
