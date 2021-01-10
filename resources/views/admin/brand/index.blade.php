@@ -43,7 +43,7 @@
                             <tr>
                                 <th scope="row"> {{ $brands->firstItem()+$loop->index }} </th>
                                 <td> {{ $brand->brand_name }} </td>
-                                <td> <img src="" alt=""> </td>
+                                <td> <img src="{{ asset($brand->brand_image) }}" style="height:40px; width:70px;"> </td>
                                 <td>
                                     @if($brand->created_at == NULL)
                                         <span class="text-danger"> No Date Set</span>
@@ -53,7 +53,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ url('brand/edit/'.$brand->id) }}" class="btn btn-info">Edit</a>
-                                    <a href="{{ url('brand/delete/'.$brand->id) }}" class="btn btn-danger">Delete</a>
+                                    <a href="{{ url('brand/delete/'.$brand->id) }}" onclick="return confirm('Are you sure to delete')" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -70,7 +70,7 @@
                 <div class="card">
                     <div class="card-header"> Add Brand </div>
                     <div class="card-body">
-                        <form action="{{ route('store.category') }}" method="POST">
+                        <form action="{{ route('store.brand') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Brand Name</label>
