@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Brand;
 use Illuminate\Support\Carbon;
 
+/* resize package を使用する場合 */
+use Image;
+
 class BrandController extends Controller
 {
     public function AllBrand(){
@@ -30,12 +33,19 @@ class BrandController extends Controller
         /* 画像をDBに挿入 */
         $brand_image = $request->file('brand_image');
 
-        $name_gen = hexdec(uniqid());
-        $img_ext = strtolower($brand_image->getClientOriginalExtension());
-        $img_name = $name_gen.'.'.$img_ext;
-        $up_location = 'image/brand/';
-        $last_img = $up_location.$img_name;
-        $brand_image->move($up_location,$img_name);
+        /* resize package を使用しない場合 */
+        // $name_gen = hexdec(uniqid());
+        // $img_ext = strtolower($brand_image->getClientOriginalExtension());
+        // $img_name = $name_gen.'.'.$img_ext;
+        // $up_location = 'image/brand/';
+        // $last_img = $up_location.$img_name;
+        // $brand_image->move($up_location,$img_name);
+
+        /* resize package を使用する場合 */
+        $name_gen = hexdec(uniqid()).'.'.$brand_image->getClientOriginalExtension();
+        Image::make($brand_image)->resize(300,200)->save('image/brand/'.$name_gen);
+
+        $last_img = 'image/brand/'.$name_gen;
 
         Brand::insert([
             'brand_name' => $request->brand_name,
@@ -70,6 +80,7 @@ class BrandController extends Controller
 
         $brand_image = $request->file('brand_image');
 
+        /* 画像fileの有無　条件 */
         if($brand_image){
             $name_gen = hexdec(uniqid());
             $img_ext = strtolower($brand_image->getClientOriginalExtension());
