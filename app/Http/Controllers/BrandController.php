@@ -64,9 +64,10 @@ class BrandController extends Controller
             
         ]);
 
+        /* Brand 更新 */
+
         $old_image = $request->old_image;
 
-        /* 画像をDBに挿入 */
         $brand_image = $request->file('brand_image');
 
         if($brand_image){
@@ -96,6 +97,17 @@ class BrandController extends Controller
             return Redirect()->back()->with('success','Brand Updated Successfully');
 
         }
+
+    }
+
+    /* Brand 削除 */
+    public function Delete($id){
+        $image = Brand::find($id);
+        $old_image = $image->brand_image;
+        unlink($old_image);
+
+        Brand::find($id)->delete();
+        return Redirect()->back()->with('success','Brand Delete Successfully');
 
     }
 }
