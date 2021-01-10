@@ -27,6 +27,7 @@ class BrandController extends Controller
             
         ]);
 
+        /* 画像をDBに挿入 */
         $brand_image = $request->file('brand_image');
 
         $name_gen = hexdec(uniqid());
@@ -43,5 +44,11 @@ class BrandController extends Controller
         ]);
 
         return Redirect()->back()->with('success','Brand Inserted Successfully');
+    }
+
+    public function Edit($id){
+        $brands = Brand::find($id);
+        return view('admin.brand.edit',compact('brands'));
+
     }
 }
