@@ -12,6 +12,14 @@ use Image;
 
 class BrandController extends Controller
 {
+
+    /* ログインしていないとlogin画面に返す */
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+
+
     public function AllBrand(){
 
         $brands = Brand::latest()->paginate(5);
