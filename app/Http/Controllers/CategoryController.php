@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+    /* ログインしていないとlogin画面に返す */
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+
+
     /* Category AllCat(index) */
     public function AllCat(){
 

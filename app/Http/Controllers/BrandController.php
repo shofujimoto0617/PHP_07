@@ -10,8 +10,18 @@ use Illuminate\Support\Carbon;
 /* resize package を使用する場合 */
 use Image;
 
+use Auth;
+
 class BrandController extends Controller
 {
+
+    /* ログインしていないとlogin画面に返す */
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+
+
     public function AllBrand(){
 
         $brands = Brand::latest()->paginate(5);
@@ -153,5 +163,10 @@ class BrandController extends Controller
 
         return Redirect()->back()->with('success','Brand Inserted Successfully');
 
+    }
+
+    public function Logout(){
+        Auth::logout();
+        return Redirect()->route('login')->with('success','User Logout');
     }
 }
