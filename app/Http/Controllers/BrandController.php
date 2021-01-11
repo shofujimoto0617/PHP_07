@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Multipic;
 use Illuminate\Support\Carbon;
+
+/* resize package を使用する場合 */
+use Image;
 
 class BrandController extends Controller
 {
@@ -30,12 +34,19 @@ class BrandController extends Controller
         /* 画像をDBに挿入 */
         $brand_image = $request->file('brand_image');
 
-        $name_gen = hexdec(uniqid());
-        $img_ext = strtolower($brand_image->getClientOriginalExtension());
-        $img_name = $name_gen.'.'.$img_ext;
-        $up_location = 'image/brand/';
-        $last_img = $up_location.$img_name;
-        $brand_image->move($up_location,$img_name);
+        /* resize package を使用しない場合 */
+        // $name_gen = hexdec(uniqid());
+        // $img_ext = strtolower($brand_image->getClientOriginalExtension());
+        // $img_name = $name_gen.'.'.$img_ext;
+        // $up_location = 'image/brand/';
+        // $last_img = $up_location.$img_name;
+        // $brand_image->move($up_location,$img_name);
+
+        /* resize package を使用する場合 */
+        $name_gen = hexdec(uniqid()).'.'.$brand_image->getClientOriginalExtension();
+        Image::make($brand_image)->resize(300,200)->save('image/brand/'.$name_gen);
+
+        $last_img = 'image/brand/'.$name_gen;
 
         Brand::insert([
             'brand_name' => $request->brand_name,
@@ -70,6 +81,7 @@ class BrandController extends Controller
 
         $brand_image = $request->file('brand_image');
 
+        /* 画像fileの有無　条件 */
         if($brand_image){
             $name_gen = hexdec(uniqid());
             $img_ext = strtolower($brand_image->getClientOriginalExtension());
@@ -108,6 +120,38 @@ class BrandController extends Controller
 
         Brand::find($id)->delete();
         return Redirect()->back()->with('success','Brand Delete Successfully');
+
+    }
+
+    /// This is for Multi Image All Methods
+
+    public function Multpic(){
+        $images = Multipic::all();
+        return view('admin.multipic.index',compact('images'));
+    }
+
+
+    /* 画像複数　登録 */
+    public function StoreImg(Request $request){
+
+        $image = $request->file('image');
+
+        /* 複数画像をDBに挿入 */
+        foreach($image as $multi_img){
+            
+            /* resize package を使用する場合 */
+            $name_gen = hexdec(uniqid()).'.'.$multi_img->getClientOriginalExtension();
+            Image::make($multi_img)->resize(300,300)->save('image/multi/'.$name_gen);
+    
+            $last_img = 'image/multi/'.$name_gen;
+    
+            Multipic::insert([
+                'image' => $last_img,
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+        return Redirect()->back()->with('success','Brand Inserted Successfully');
 
     }
 }
