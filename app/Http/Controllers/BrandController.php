@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Brand;
+use App\Models\Multipic;
 use Illuminate\Support\Carbon;
 
 /* resize package を使用する場合 */
@@ -119,6 +120,38 @@ class BrandController extends Controller
 
         Brand::find($id)->delete();
         return Redirect()->back()->with('success','Brand Delete Successfully');
+
+    }
+
+    /// This is for Multi Image All Methods
+
+    public function Multpic(){
+        $images = Multipic::all();
+        return view('admin.multipic.index',compact('images'));
+    }
+
+
+    /* 画像複数　登録 */
+    public function StoreImg(Request $request){
+
+        $image = $request->file('image');
+
+        /* 複数画像をDBに挿入 */
+        foreach($image as $multi_img){
+            
+            /* resize package を使用する場合 */
+            $name_gen = hexdec(uniqid()).'.'.$multi_img->getClientOriginalExtension();
+            Image::make($multi_img)->resize(300,300)->save('image/multi/'.$name_gen);
+    
+            $last_img = 'image/multi/'.$name_gen;
+    
+            Multipic::insert([
+                'image' => $last_img,
+                'created_at' => Carbon::now()
+            ]);
+        }
+
+        return Redirect()->back()->with('success','Brand Inserted Successfully');
 
     }
 }
