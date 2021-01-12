@@ -99,6 +99,5 @@
                 <a class="text-primary" href="http://www.easylearningbg.com/" target="_blank">Easy</a>.
             </p>
         </div>
-    </div>
-</body>
+    </body>
 </html>
