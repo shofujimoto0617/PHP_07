@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    /* ログインしていないとlogin画面に返す */
     public function __construct(){
         $this->middleware('auth');
     }
