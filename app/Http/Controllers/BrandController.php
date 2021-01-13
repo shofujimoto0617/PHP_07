@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 
 /* resize package を使用する場合 */
 use Image;
+/* <-------------------------> */
 
 use Auth;
 
