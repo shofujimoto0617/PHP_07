@@ -71,6 +71,12 @@ Route::post('/store/slider', [HomeController::class, 'StoreSlider'])->name('stor
 
 Route::get('/home/About', [AboutController::class, 'HomeAbout'])->name('home.about');
 
+Route::get('/add/About', [AboutController::class, 'AddAbout'])->name('add.about');
+
+Route::post('/store/About', [AboutController::class, 'StoreAbout'])->name('store.about');
+
+
+
 
 
 
