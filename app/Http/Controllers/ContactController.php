@@ -39,7 +39,7 @@ class ContactController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        return Redirect()->route('admin.contact')->with('success','Contact Inserted Successfully');     
+        return Redirect()->route('contact')->with('success','Contact Inserted Successfully');     
     }
 
     public function Contact(){
@@ -58,5 +58,10 @@ class ContactController extends Controller
 
         return Redirect()->route('contact')->with('success','Your Message Send Successfully');     
 
+    }
+
+    public function AdminMessage(){
+        $messages = ContactForm::all();
+        return view('admin.contact.message',compact('messages'));
     }
 }
