@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 
 class ContactController extends Controller
@@ -37,5 +39,10 @@ class ContactController extends Controller
         ]);
 
         return Redirect()->route('admin.contact')->with('success','Contact Inserted Successfully');     
+    }
+
+    public function Contact(){
+        $contacts = DB::table('contacts')->first();
+        return view('pages.contact',compact('contacts'));
     }
 }
