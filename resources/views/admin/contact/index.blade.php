@@ -8,7 +8,7 @@
         <div class="row">
 
             <h4>Contact Page</h4>
-            <a href="{{ route('add.about') }}"> <button class="btn btn-info">Add Contact</button> </a>
+            <a href="{{ route('add.contact') }}"> <button class="btn btn-info">Add Contact</button> </a>
             <br><br>
 
             <div class="col-md-12">
@@ -28,7 +28,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" width="5%">SL</th>
-                                <th scope="col" width="15%">Contact Addrees</th>
+                                <th scope="col" width="15%">Contact Address</th>
                                 <th scope="col" width="25%">Contact email</th>
                                 <th scope="col" width="15%">Contact Phone</th>
                                 <th scope="col" width="15%">Action</th>
@@ -41,7 +41,7 @@
                             @foreach($contacts as $con)
                             <tr>
                                 <th scope="row"> {{ $i++ }} </th>
-                                <td> {{ $con->addrees }} </td>
+                                <td> {{ $con->address }} </td>
                                 <td> {{ $con->email }} </td>
                                 <td> {{ $con->phone }} </td>
              
